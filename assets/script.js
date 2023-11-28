@@ -17,23 +17,31 @@ const slides = [
 		tagLine: "Autocollants <span>avec découpe laser sur mesure</span>",
 	},
 ];
+// Récupérer un élément en fournissant son id 
+const arrowRight = document.getElementById("js-arrow_right");
+const arrowLeft = document.getElementById("js-arrow_left");
+
 ////Mettre un event listener sur chacune des flèches
-const arrowRight = document.querySelector("#js-arrow_right");
 arrowRight.addEventListener("click", function () {
-	console.log("arrowRight");
+	console.log("arrowRight")
 });
-const arrowLeft = document.querySelector("#js-arrow_left");
 arrowLeft.addEventListener("click", function () {
-	console.log("arrowLeft");
+	console.log("arrowLeft")
 });
 
 //Ajouter les bullet points sur la partie basse du slider
-// Récupération d'odject dots
-const dotContainer = document.querySelector("#js-dots");
-console.log(dotContainer + " Récupération d'odject dots");
-// creation d'element nouveau point
-const newDot = document.createElement("span"); 
-// Ajouter classList a cet element
-newDot.classList.add("dot"); 
-// Afficher nouveau point
-dotContainer.appendChild(newDot); 
+// Récupérer un élément en fournissant son id 
+const dotContainer = document.getElementById("js-dots")
+console.log(dotContainer)
+
+// Creation de la balise div pour ajouter les bulles
+const newDot = document.createElement("div")
+console.log(newDot)
+
+// Sélectionner la div pour y ajouter une class: .dot, voir css
+ newDot.classList.add("dot")
+ console.log(newDot)
+
+// Ajouter la div: .dot dans la div: #js-dots
+dotContainer.appendChild(newDot)
+console.log(newDot)
