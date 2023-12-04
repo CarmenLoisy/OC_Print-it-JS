@@ -16,32 +16,52 @@ const slides = [
 		image: "slide4.png",
 		tagLine: "Autocollants <span>avec découpe laser sur mesure</span>",
 	},
-];
-// Récupérer un élément en fournissant son id 
-const arrowRight = document.getElementById("js-arrow_right");
-const arrowLeft = document.getElementById("js-arrow_left");
-
-////Mettre un event listener sur chacune des flèches
-arrowRight.addEventListener("click", function () {
-	console.log("arrowRight")
-});
-arrowLeft.addEventListener("click", function () {
-	console.log("arrowLeft")
-});
-
-//Ajouter les bullet points sur la partie basse du slider
-// Récupérer un élément en fournissant son id 
+]
+// Récupérer un élément du DOM en fournissant son id
+const arrowRight = document.getElementById("js-arrow_right")
+const arrowLeft = document.getElementById("js-arrow_left")
 const dotContainer = document.getElementById("js-dots")
-console.log(dotContainer)
+const imageBanner = document.getElementById("js-banner-img")
+const textBanner = document.getElementById("js-text-img")
 
-// Creation de la balise div pour ajouter les bulles
-const newDot = document.createElement("div")
-console.log(newDot)
+let currentIndex = 0 // Initialisation de l'index courant
+let listDots = [] // Initialise avec un tableau vide pour ajouter les points
+// Création des points indicateurs et ajout des écouteurs d'événements
+for (let i = 0; i < slides.length; i++) {
+	const newDot = document.createElement("div") // Création d'un div avec createElement
+	newDot.classList.add("dot") // Ajouter de la class .dot dans la nouvelle div
+	dotContainer.appendChild(newDot) // Ajouter le nouvel: div .dot au parent existant: div #js-dots
+	listDots.push(newDot) // Ajouter la classe dot_selected à la première diapositive
+	newDot.addEventListener("click", () => handleDotClick(i))
+}
+// Fonction pour mettre à jour la diapositive en fonction de l'index donné
+function updateSlide(index) {
+	const currentSlide = slides[index] //Récupération de la diapositive actuelle
+	imageBanner.src = `./assets/images/slideshow/${currentSlide.image}` // Mise à jour de l'image
+	textBanner.innerHTML = currentSlide.tagLine // Mise à jour du texte
+	console.log(`Vous êtes sur la photo ${currentSlide.image}`)
+}
+// Fonction pour mettre à jour la classe dot_selected
+function updateDot() {
+	listDots.forEach((dot, i) => {
+	  dot.classList.toggle("dot_selected", i === currentIndex)
+	})
+  }
 
-// Sélectionner la div pour y ajouter une class: .dot, voir css
- newDot.classList.add("dot")
- console.log(newDot)
-
-// Ajouter la div: .dot dans la div: #js-dots
-dotContainer.appendChild(newDot)
-console.log(newDot)
+// Fonction pour gérer les clics sur les flèches (1 pour droite, -1 pour gauche)
+function handleArrowClick(increment) {
+	currentIndex = (currentIndex + increment + slides.length) % slides.length // Calcul du nouvel index en prenant en compte la boucle infinie
+	updateSlide(currentIndex) // Mise à jour de la diapositive
+	updateDot()
+}
+// Gestionnaires d'événements pour les clics sur les flèches
+arrowRight.addEventListener("click", () => handleArrowClick(1))
+arrowLeft.addEventListener("click", () => handleArrowClick(-1))
+//Fonction pour gérer les clics sur les points indicateurs
+function handleDotClick(index) {
+	currentIndex = index //// Mise à jour de l'index
+	updateSlide(currentIndex)
+	updateDot()
+}
+updateSlide(currentIndex) // Initialise la première diapositive
+updateDot()  // Ajout de cette ligne pour sélectionner le premier point indicateur par défaut
